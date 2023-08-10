@@ -10,6 +10,12 @@ namespace API.Data
         public DbSet<Quote>? Quotes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Book>()
+                .HasMany(ml => ml.Quotes)
+                .WithOne(m => m.Book)
+                .HasForeignKey(m => m.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Book>().HasData(
                 new Book

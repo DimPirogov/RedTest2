@@ -19,7 +19,7 @@ namespace API.Controllers
         [HttpGet("GetAllBooks")]
         public async Task<ActionResult<List<Book>>> GetAllBooks()
         {
-            List<Book> list = await context.Books!.ToListAsync();
+            List<Book> list = await context.Books!.Include(B => B.Quotes).ToListAsync();
             if (list == null)
             {
                 return NotFound();
@@ -29,7 +29,7 @@ namespace API.Controllers
         [HttpGet("GetBook/{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
-            var book = await context.Books!.Where(e => e.Id == id).SingleOrDefaultAsync();
+            var book = await context.Books!.Where(B => B.Id == id).SingleOrDefaultAsync();
             if (book != null)
             {
                 return Ok(book);
@@ -46,7 +46,7 @@ namespace API.Controllers
         [HttpDelete("DeleteBook/{id}")]
         public async Task<ActionResult> DeleteBook(int id)
         {
-            var book = await context.Books!.Where(e => e.Id == id).SingleOrDefaultAsync();
+            var book = await context.Books!.Where(B => B.Id == id).SingleOrDefaultAsync();
             if (book is null)
             {
                 return NotFound($"Could not find Book with id {id}");
@@ -60,7 +60,7 @@ namespace API.Controllers
         {
             if (id != book.Id)
                 return BadRequest("Book id mismatch");
-            var bookToUpdate = await context.Books!.Where(e => e.Id == id).SingleOrDefaultAsync();
+            var bookToUpdate = await context.Books!.Where(B => B.Id == id).SingleOrDefaultAsync();
             if (bookToUpdate is null)
                 return NotFound($"Book with id {id} not found.");
             bookToUpdate.Author = book.Author;
@@ -71,6 +71,37 @@ namespace API.Controllers
             //await context.UpdateAsync
             await context.SaveChangesAsync();
             return Ok($"Updated Book with id {id}.");
+        }
+        // quotes section
+        [HttpGet("GetBook/{bookId}/quotes")]
+        public async Task<ActionResult<List<Quote>>> GetBookQuotes(int bookId)
+        {
+            List<Quote> list = await context.Quotes!.Where(B => B.BookId == bookId).ToListAsync();
+            if (list == null)
+            {
+                return NotFound($"There are no quotes in this Book.");
+            }
+            return Ok(list);
+        }
+        [HttpPost("AddBook/{bookId}/quotes")]
+        public async Task<ActionResult> AddBookQuote(int bookId, string txt)
+        { 
+            var QuoteToAdd = new Quote { BookId = bookId, Text = txt };
+            await context.Quotes!.AddAsync(QuoteToAdd);
+            await context.SaveChangesAsync();
+            return Ok($"Saved quote {QuoteToAdd.Text}.");
+        }
+        [HttpDelete("DeleteQuote/{quoteId}")]
+        public async Task<ActionResult> DeleteBookQuote(int quoteId)
+        {
+            var quote = await context.Quotes!.Where(Q => Q.Id == quoteId).SingleOrDefaultAsync();
+            if (quote is null)
+            {
+                return NotFound($"Could not find Quote with id {quoteId}");
+            }
+            context.Quotes!.Remove(quote);
+            await context.SaveChangesAsync();
+            return Ok($"Deleted Quote \" {quote.Text} \".");
         }
     }
 }
