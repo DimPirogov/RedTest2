@@ -89,7 +89,7 @@ namespace API.Controllers
             var QuoteToAdd = new Quote { BookId = bookId, Text = txt };
             await context.Quotes!.AddAsync(QuoteToAdd);
             await context.SaveChangesAsync();
-            return Ok($"Saved quote {QuoteToAdd.Text}.");
+            return Ok($"Saved quote \"{QuoteToAdd.Text}\".");
         }
         [HttpDelete("DeleteQuote/{quoteId}")]
         public async Task<ActionResult> DeleteBookQuote(int quoteId)
