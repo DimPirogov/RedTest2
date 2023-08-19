@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
@@ -37,6 +36,7 @@ namespace API.Controllers
             }
             return NotFound();
         }
+        [Authorize]
         [HttpPost("AddBook")]
         public async Task<ActionResult> AddBook(Book book)
         {
@@ -44,6 +44,7 @@ namespace API.Controllers
             await context.SaveChangesAsync();
             return Ok($"Saved book {book.Title}.");
         }
+        [Authorize]
         [HttpDelete("DeleteBook/{id}")]
         public async Task<ActionResult> DeleteBook(int id)
         {
@@ -56,6 +57,7 @@ namespace API.Controllers
             await context.SaveChangesAsync();
             return Ok($"Deleted Book with id {id}.");
         }
+        [Authorize]
         [HttpPut("UpdateBook/{id}")]
         public async Task<ActionResult<Book>> UpdateBook(int id, Book book)
         {
@@ -84,6 +86,7 @@ namespace API.Controllers
             }
             return Ok(list);
         }
+        [Authorize]
         [HttpPost("AddBook/{bookId}/quotes")]
         public async Task<ActionResult> AddBookQuote(int bookId, string txt)
         { 
@@ -92,6 +95,7 @@ namespace API.Controllers
             await context.SaveChangesAsync();
             return Ok($"Saved quote \"{QuoteToAdd.Text}\".");
         }
+        [Authorize]
         [HttpDelete("DeleteQuote/{quoteId}")]
         public async Task<ActionResult> DeleteBookQuote(int quoteId)
         {
