@@ -1,0 +1,29 @@
+<br>The list
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Nr</th>
+      <th>ID</th>
+      <th>Titel</th>
+      <th>Författare</th>
+      <th>Datum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+        *ngFor="let book of books; let i=index"
+      >
+      <td>{{ i + 1 }}</td>
+      <td>{{ book.id }}</td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.date | date:'yyyy' }}
+        <i
+          class="fa fa-trash fa-x"
+          (click)="deleteBook(book.id)"
+          title="radera"
+        ></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
