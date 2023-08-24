@@ -1,9 +1,11 @@
 ﻿using API.Data;
+using API.DTO;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace API.Controllers
 {
@@ -36,15 +38,16 @@ namespace API.Controllers
             }
             return NotFound();
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost("AddBook")]
-        public async Task<ActionResult> AddBook(Book book)
+        public async Task<ActionResult<Book>> AddBook(AddBookDTO newBook)
         {
+            var book = new Book { Author = newBook.Author, Date = DateTime.Now, Title = newBook.Title };
             await context.Books!.AddAsync(book);
             await context.SaveChangesAsync();
-            return Ok($"Saved book {book.Title}.");
+            return Ok(book);
         }
-        [Authorize]
+        //[Authorize]
         [HttpDelete("DeleteBook/{id}")]
         public async Task<ActionResult> DeleteBook(int id)
         {
@@ -55,25 +58,21 @@ namespace API.Controllers
             }
             context.Books!.Remove(book);
             await context.SaveChangesAsync();
-            return Ok($"Deleted Book with id {id}.");
+            return Ok();
+            //return Ok($"Deleted Book with id {id}.");
         }
-        [Authorize]
+        //[Authorize]
         [HttpPut("UpdateBook/{id}")]
-        public async Task<ActionResult<Book>> UpdateBook(int id, Book book)
+        public async Task<ActionResult<Book>> UpdateBook( UpdateBookDTO book)
         {
-            if (id != book.Id)
-                return BadRequest("Book id mismatch");
-            var bookToUpdate = await context.Books!.Where(B => B.Id == id).SingleOrDefaultAsync();
+            var bookToUpdate = await context.Books!.Where(B => B.Id == book.Id).SingleOrDefaultAsync();
             if (bookToUpdate is null)
-                return NotFound($"Book with id {id} not found.");
+                return NotFound($"Book with id {book.Id} not found.");
             bookToUpdate.Author = book.Author;
             bookToUpdate.Title = book.Title;
-            if (bookToUpdate.Quotes != null)
-                bookToUpdate.Quotes = book.Quotes;
-            bookToUpdate.Date = book.Date;
-            //await context.UpdateAsync
             await context.SaveChangesAsync();
-            return Ok($"Updated Book with id {id}.");
+            //return Ok($"Updated Book with id {book.Id}.");
+            return Ok();
         }
         // quotes section
         [HttpGet("GetBook/{bookId}/quotes")]
@@ -86,7 +85,7 @@ namespace API.Controllers
             }
             return Ok(list);
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost("AddBook/{bookId}/quotes")]
         public async Task<ActionResult> AddBookQuote(int bookId, string txt)
         { 
@@ -95,7 +94,7 @@ namespace API.Controllers
             await context.SaveChangesAsync();
             return Ok($"Saved quote \"{QuoteToAdd.Text}\".");
         }
-        [Authorize]
+        //[Authorize]
         [HttpDelete("DeleteQuote/{quoteId}")]
         public async Task<ActionResult> DeleteBookQuote(int quoteId)
         {

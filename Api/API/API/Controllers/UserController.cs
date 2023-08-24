@@ -30,7 +30,8 @@ namespace API.Controllers
         {
             await context.Users!.AddAsync(user);
             await context.SaveChangesAsync();
-            return Ok($"Added user {user.UserName}.");
+            return Ok();
+            //return Ok($"Added user {user.UserName}.");
         }
 
         [HttpPost("token")]
@@ -71,7 +72,7 @@ namespace API.Controllers
             return await context.Users!.FirstOrDefaultAsync(U => U.UserName == userName && U.Password == password);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetAllUsers")]
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
@@ -82,7 +83,7 @@ namespace API.Controllers
             }
             return Ok(list);
         }
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetUser/{id}")]
         public async Task<ActionResult<Book>> GetUser(int id)
         {
