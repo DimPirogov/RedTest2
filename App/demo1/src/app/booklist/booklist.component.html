@@ -1,23 +1,35 @@
-<br>The list
+<br>Totalt i boklistan finns {{ books.length }} st.
+<br>
+<a routerLink="/new-book">
+  <button class="btn btn-primary">Lägg till ny bok</button>
+</a>
 <table class="styled-table">
   <thead>
     <tr>
-      <th>Nr</th>
+      <th>Edit</th>
       <th>ID</th>
       <th>Titel</th>
       <th>Författare</th>
       <th>Datum</th>
+      <th class="fa fa-trash fa-x" title="radera"></th>
     </tr>
   </thead>
   <tbody>
     <tr
-        *ngFor="let book of books; let i=index"
+      *ngFor="let book of books; let i=index"
       >
-      <td>{{ i + 1 }}</td>
+      <td>{{ i + 1 }}
+        <a routerLink="/edit-book/{{ book.id }}"
+          title="edit">
+          <i class="fa fa-edit fa-x" aria-label="redigera book"></i
+        ></a>
+      </td>
       <td>{{ book.id }}</td>
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.date | date:'yyyy' }}
+      </td>
+      <td>
         <i
           class="fa fa-trash fa-x"
           (click)="deleteBook(book.id)"

@@ -1,1 +1,54 @@
-<p>new-book works!</p>
+<button
+  type="button"
+  (click)="goBack()"
+  class="btn btn-danger"
+>Avbryt</button>
+<h2>Registrera ny book</h2>
+<p>Fyll i rutorna</p>
+<form
+  class="card card-body mt-3"
+  #newBook="ngForm"
+  style="max-width: 500px"
+  (submit)="addBook(newBook)"
+>
+  <input
+    type="text"
+    ngModel
+    name="title"
+    placeholder="Ny titel"
+    class="form-control"
+    #title="ngModel"
+    required
+
+  >
+  <input
+    type="text"
+    ngModel
+    name="author"
+    minlength="4"
+    placeholder="Ny författare, minst 4 tecken"
+    class="form-control"
+    #author="ngModel"
+    required
+  >
+  <!-- <input
+    type="number"
+    ngModel
+    name="year"
+    placeholder="Välj utgivningsår, mellan 1700 och 2023"
+    min="1700"
+    max="2023"
+    class="form-control"
+    #year="ngModel"
+    required
+  > -->
+
+  <button
+    class="btn"
+    [disabled]="newBook.invalid"
+    [ngClass]="{
+      'btn-success': newBook.valid,
+      'btn-danger': newBook.invalid,
+    }"
+  >Spara ny bok</button>
+</form>

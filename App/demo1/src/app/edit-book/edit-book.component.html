@@ -1,1 +1,58 @@
-<p>edit-book works!</p>
+<h2>Ändra i boken</h2>
+<button
+type="button"
+(click)="goBack()"
+class="btn btn-danger"
+>Avbryt</button>
+<div *ngIf="book">
+  <h3><span>ID: </span>{{ book.id }}</h3>
+  <h4>Titel: {{book.title | uppercase}}</h4>
+  <form
+    #formControl="ngForm"
+    class="card card-body"
+    style="max-width: 500px"
+  >
+    <label for="title">Titel:</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      [(ngModel)]="book.title"
+      placeholder="Titel"
+      class="form-control"
+      required
+    >
+    <label for="author">Författare: </label>
+    <input
+      id="author"
+      name="author"
+      type="text"
+      minlength="4"
+      [(ngModel)]="book.author"
+      placeholder="Författare, minst 4 tecken"
+      class="form-control"
+      required
+    >
+    <!-- <label for="year">Utgivningsår:</label>
+    <input
+      id="year"
+      name="year"
+      type="number"
+      [(ngModel)]="book.date"
+      placeholder="Utgivningsår, mellan 1700 och 2023"
+      min="1700"
+      max="2023"
+      class="form-control"
+      required
+    > -->
+  <button
+    type="button"
+    class="btn"
+    (click)="save()"
+    [disabled]="formControl.invalid"
+    [ngClass]="{
+      'btn-success': formControl.valid,
+      'btn-danger': formControl.invalid,
+    }"
+  >Spara ändringar</button>
+  </form>
