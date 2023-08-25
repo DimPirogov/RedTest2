@@ -1,0 +1,31 @@
+<button
+  type="button"
+  (click)="goBack()"
+  class="btn btn-danger"
+>Avbryt</button>
+<h2>Skriv in ny citat</h2>
+<p>Fyll i rutan</p>
+<form
+  class="card card-body mt-3"
+  #newQuotes="ngForm"
+  style="max-width: 500px"
+  (submit)="addQuote(newQuotes)"
+>
+  <input
+    type="text"
+    ngModel
+    name="text"
+    placeholder="Ny citat"
+    class="form-control"
+    #txt="ngModel"
+    required
+  >
+  <button
+    class="btn"
+    [disabled]="newQuotes.invalid"
+    [ngClass]="{
+      'btn-success': newQuotes.valid,
+      'btn-danger': newQuotes.invalid,
+    }"
+  >Spara ny citat</button>
+</form>

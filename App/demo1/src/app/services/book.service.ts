@@ -1,3 +1,4 @@
+import { AddQuoteDTO } from './../model/addQuoteDTO';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -30,17 +31,17 @@ export class BookService {
   addBook(book: AddBookDTO): Observable<Book> {
     return this.http.post<Book>(`${this.URL}/AddBook`, book);
   }
-  deleteBook(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.URL}/DeleteBook/${id}`);
+  deleteBook(id: number){
+    return this.http.delete<Book>(`${this.URL}/DeleteBook/${id}`);
   }
   // quotes section
   getBookQuotes(bokId: number): Observable<Quote[]> {
     return this.http.get<Quote[]>(`${this.URL}/GetBook/${bokId}/quotes`);
   }
-  addBookQuote(bokId: number, quote: string): Observable<string> {
-    return this.http.post<string>(`${this.URL}/AddBook/${bokId}/quotes`, quote);
+  addBookQuote(quote: AddQuoteDTO): Observable<Quote> {
+    return this.http.post<Quote>(`${this.URL}/AddQuotes`, quote);
   }
-  deleteBookQuote(quoteId: number): Observable<void> {
-    return this.http.delete<void>(`${this.URL}/DeleteQuote/${quoteId}`);
+  deleteBookQuote(quoteId: number){
+    return this.http.delete<Quote>(`${this.URL}/DeleteQuote/${quoteId}`);
   }
 }

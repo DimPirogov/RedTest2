@@ -1,0 +1,35 @@
+<button
+type="button"
+(click)="goBack()"
+class="btn btn-danger"
+>Avbryt</button>
+<br>
+<a routerLink="/new-quote/{{ bookId }}">
+  <button class="btn btn-primary">Lägg till ny citat</button>
+</a>
+<table class="styled-table" *ngIf="quotes.length > 0">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>ID</th>
+      <th>Citat</th>
+      <th *ngIf="isLoggedIn$ | async" class="fa fa-trash fa-x" title="radera"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let quote of quotes; let i=index"
+      >
+      <td>{{ i + 1 }}</td>
+      <td>{{ quote.id }}</td>
+      <td>{{ quote.text }}</td>
+      <td *ngIf="isLoggedIn$ | async">
+        <i
+          class="fa fa-trash fa-x"
+          (click)="deleteQuote(quote.id)"
+          title="radera"
+        ></i>
+      </td>
+    </tr>
+  </tbody>
+</table>

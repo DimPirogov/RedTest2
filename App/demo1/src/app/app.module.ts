@@ -11,6 +11,8 @@ import { EditBookComponent } from './edit-book/edit-book.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { InterceptorAuthService } from './services/interceptor.service';
+import { QuoteslistComponent } from './quoteslist/quoteslist.component';
+import { NewQuoteComponent } from './new-quote/new-quote.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { InterceptorAuthService } from './services/interceptor.service';
     NewBookComponent,
     EditBookComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    QuoteslistComponent,
+    NewQuoteComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,7 @@ import { InterceptorAuthService } from './services/interceptor.service';
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorAuthService,
-    multi: true,
+    multi: true
   }],
   bootstrap: [AppComponent]
 })

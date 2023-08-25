@@ -6,19 +6,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isLoggedOut$ | async">
           <a class="nav-link active" aria-current="page" routerLink="/login"
-          >Login</a>
+          >Logga in</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+        <li class="nav-item" *ngIf="isLoggedIn$ | async">
+          <a class="nav-link active"
+          aria-current="page"
+          (click)="onLogout()"
+          href="#"
+          >Logga ut</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

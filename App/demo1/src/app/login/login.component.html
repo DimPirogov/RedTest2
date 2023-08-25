@@ -1,6 +1,38 @@
 <div>
-  <h2>Logga in</h2>
-  <div>name: <input [(ngModel)]="loginDto.userName"/></div>
-  <div>password: <input [(ngModel)]="loginDto.password"/></div>
-  <button (click)="login(loginDto)">Logga in</button>
+  <form class="card card-body mt-3"
+    style="max-width: 500px"
+    #formLogin="ngForm"
+    >
+    <h2>Logga in</h2>
+    <label for="name" class="form-label">Namn</label>
+    <input
+      class="form-control"
+      id="userName"
+      name="userName"
+      type="text"
+      #userName="ngModel"
+      [(ngModel)]="loginDto.userName"
+      required
+      >
+    <label for="password"  class="form-label">Lösenord</label>
+    <input
+      class="form-control"
+      id="password"
+      name="password"
+      type="password"
+      #password="ngModel"
+      [(ngModel)]="loginDto.password"
+      required
+      >
+    <button
+      class="btn"
+      type="button"
+      [disabled]="formLogin.invalid"
+      [ngClass]="{
+        'btn-success': formLogin.valid,
+        'btn-danger': formLogin.invalid,
+      }"
+      (click)="login(loginDto)"
+      >Logga in</button>
+  </form>
 </div>

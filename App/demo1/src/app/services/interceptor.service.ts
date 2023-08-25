@@ -9,7 +9,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 export class InterceptorAuthService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler)
     :Observable<HttpEvent<any>> {
-      const token = localStorage.getItem('jwtToken');
+      const token = localStorage.getItem('jwt_token');
       if (token) {
         req = req.clone({
           setHeaders: { Authorization: `Bearer ${token}` }

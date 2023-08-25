@@ -6,20 +6,24 @@
 <table class="styled-table">
   <thead>
     <tr>
-      <th>Edit</th>
+      <th>#</th>
+      <th *ngIf="isLoggedIn$ | async">Edit</th>
       <th>ID</th>
       <th>Titel</th>
       <th>Författare</th>
+      <th>Citat</th>
       <th>Datum</th>
-      <th class="fa fa-trash fa-x" title="radera"></th>
+      <th *ngIf="isLoggedIn$ | async" class="fa fa-trash fa-x" title="radera"></th>
     </tr>
   </thead>
   <tbody>
     <tr
       *ngFor="let book of books; let i=index"
       >
-      <td>{{ i + 1 }}
-        <a routerLink="/edit-book/{{ book.id }}"
+      <td>{{ i + 1 }}</td>
+      <td *ngIf="isLoggedIn$ | async">
+        <a
+          routerLink="/edit-book/{{ book.id }}"
           title="edit">
           <i class="fa fa-edit fa-x" aria-label="redigera book"></i
         ></a>
@@ -27,9 +31,16 @@
       <td>{{ book.id }}</td>
       <td>{{ book.title }}</td>
       <td>{{ book.author }}</td>
+      <td>
+        <a
+          routerLink="/quoteslist/{{ book.id }}"
+          title="citat">
+          <i class="fa fa-pencil fa-x" aria-label="lägg till citat"></i
+          ></a>
+      </td>
       <td>{{ book.date | date:'yyyy' }}
       </td>
-      <td>
+      <td *ngIf="isLoggedIn$ | async">
         <i
           class="fa fa-trash fa-x"
           (click)="deleteBook(book.id)"

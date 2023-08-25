@@ -18,9 +18,10 @@ export class LoginComponent {
   constructor(private userService: UserService, private location: Location) { }
 
   login(loginDto: User) {
-    this.userService.login(loginDto).subscribe((jwtDto) => {
-      //this.jwtDto = jwtDto;
-      localStorage.setItem('jwtToken', jwtDto.token);
+    this.userService.login(loginDto).subscribe(res => {
+      localStorage.setItem('jwt_token', (res as any));
+      this.userService.loggedIn.next(true);
+      this.userService.loggedOut.next(false);
       this.goBack();
     });
   }
