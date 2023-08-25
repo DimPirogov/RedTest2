@@ -86,13 +86,14 @@ namespace API.Controllers
             return Ok(list);
         }
         //[Authorize]
-        [HttpPost("AddBook/{bookId}/quotes")]
-        public async Task<ActionResult> AddBookQuote(int bookId, string txt)
+        [HttpPost("AddQuotes")]
+        public async Task<ActionResult> AddBookQuote(AddQuoteDTO newQuote)
         { 
-            var QuoteToAdd = new Quote { BookId = bookId, Text = txt };
-            await context.Quotes!.AddAsync(QuoteToAdd);
+            var quote = new Quote { BookId = newQuote.BookId, Text = newQuote.Text };
+            await context.Quotes!.AddAsync(quote);
             await context.SaveChangesAsync();
-            return Ok($"Saved quote \"{QuoteToAdd.Text}\".");
+            return Ok(quote);
+            //return Ok($"Saved quote \"{QuoteToAdd.Text}\".");
         }
         //[Authorize]
         [HttpDelete("DeleteQuote/{quoteId}")]
@@ -105,7 +106,8 @@ namespace API.Controllers
             }
             context.Quotes!.Remove(quote);
             await context.SaveChangesAsync();
-            return Ok($"Deleted Quote \" {quote.Text} \".");
+            return Ok();
+            //return Ok($"Deleted Quote \" {quote.Text} \".");
         }
     }
 }
