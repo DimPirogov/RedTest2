@@ -1,7 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import '~bootstrap/dist/css/bootstrap.min.css'; */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+}
+:root {
+  --blue : #0A3055;
+  --red : #67221B;
+  --green : #009879;
+  --gray : #2E343B;
+  --white : #ffffff;
+}
+
 * {
   border-radius: 0 !important;
+  box-sizing: border-box;
+}
+
+/* html[data-theme='light']{
+  --blue : #0A3055;
+  --red : #67221B;
+  --green : #009879;
+  --gray : #2E343B;
+}
+
+html[data-theme='dark']{
+} */
+
+/* buttons */
+.btn-success {
+  background-color: var(--green);
+  border-color: var(--green);
+}
+.btn-danger {
+  background-color: var(--red);
+  border-color: var(--red);
+}
+.btn-primary {
+  background-color: var(--blue);
+  border-color: var(--blue);
 }
 /* table props */
 .styled-table {
@@ -13,7 +54,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .styled-table thead tr {
-  background-color: #009879;
+  background-color: var(--green);
   color: #ffffff;
   text-align: left;
 }
@@ -28,18 +69,18 @@
   background-color: #f3f3f3;
 }
 .styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid var(--green);
 }
 .styled-table tbody tr:hover {
   /* font-weight: bold; */
-  color: #009879;
+  color: var(--green);
 }
 /* i sektion */
 i {
-  color: #009879;
+  color: var(--green);
 }
 i:hover{
-  color:red;
+  color:var(--red);
 }
 /* link */
 a {
