@@ -38,7 +38,7 @@ namespace API.Controllers
             }
             return NotFound();
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost("AddBook")]
         public async Task<ActionResult<Book>> AddBook(AddBookDTO newBook)
         {
@@ -47,7 +47,7 @@ namespace API.Controllers
             await context.SaveChangesAsync();
             return Ok(book);
         }
-        //[Authorize]
+        [Authorize]
         [HttpDelete("DeleteBook/{id}")]
         public async Task<ActionResult> DeleteBook(int id)
         {
@@ -61,7 +61,7 @@ namespace API.Controllers
             return Ok();
             //return Ok($"Deleted Book with id {id}.");
         }
-        //[Authorize]
+        [Authorize]
         [HttpPut("UpdateBook/{id}")]
         public async Task<ActionResult<Book>> UpdateBook( UpdateBookDTO book)
         {
@@ -95,7 +95,7 @@ namespace API.Controllers
             return Ok(quote);
             //return Ok($"Saved quote \"{QuoteToAdd.Text}\".");
         }
-        //[Authorize]
+        [Authorize]
         [HttpDelete("DeleteQuote/{quoteId}")]
         public async Task<ActionResult> DeleteBookQuote(int quoteId)
         {
